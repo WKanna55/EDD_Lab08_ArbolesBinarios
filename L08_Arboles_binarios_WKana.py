@@ -21,8 +21,33 @@ class BusquedaArbolBinario:
                 raiz.izquierda = self.insertar(dato, raiz.izquierda)
         return raiz
 
-    def eliminar(self):
-        pass
+    def eliminar(self, valor, raiz):
+        # 4to caso, root is none
+        if not raiz:
+            return raiz
+
+        # Busqueda del elemento
+        if raiz.dato > valor:
+            raiz.izquierda = self.eliminar(valor, raiz.izquierda)
+        elif raiz.dato < valor:
+            raiz.derecha = self.eliminar(valor, raiz.derecha)
+        else:  # Encontrado al elemento
+            # Leaf Node
+            if raiz.derecha is None and raiz.izquierda is None:
+                return None
+
+            # One Child
+            if raiz.derecha is None:
+                return raiz.izquierda
+            if raiz.izquierda is None:
+                return raiz.derecha
+
+            # Two children
+            min_value = self.min(raiz.derecha)
+            raiz.dato = min_value
+            raiz.derecha = self.eliminar(min_value, raiz.derecha)
+        return raiz
+
 
     def buscar(self, dato, raiz):
         if raiz is None:
@@ -262,4 +287,9 @@ bst.insertar(14, bst.raiz)
 #print(bst.total_nodos(bst.raiz))
 #print(bst.obtener_ancestro(14, bst.raiz))
 #print(bst.verificar_bst(bst.raiz))
-print(bst.nodo_k_distancia(8,2,bst.raiz))
+#print(bst.nodo_k_distancia(8,2,bst.raiz))
+
+bst.in_order_niveles(bst.raiz)
+bst.eliminar(8, bst.raiz)
+print("\n\n")
+bst.in_order_niveles(bst.raiz)
