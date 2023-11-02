@@ -22,7 +22,7 @@ class BusquedaArbolBinario:
         return raiz
 
     def eliminar(self, valor, raiz):
-        # 4to caso, root is none
+        # 4to caso, raiz is none
         if not raiz:
             return raiz
 
@@ -32,17 +32,17 @@ class BusquedaArbolBinario:
         elif raiz.dato < valor:
             raiz.derecha = self.eliminar(valor, raiz.derecha)
         else:  # Encontrado al elemento
-            # Leaf Node
+            # 3er caso: nodo hoja
             if raiz.derecha is None and raiz.izquierda is None:
                 return None
 
-            # One Child
+            # 2do caso: 1 hijo
             if raiz.derecha is None:
                 return raiz.izquierda
             if raiz.izquierda is None:
                 return raiz.derecha
 
-            # Two children
+            # 1er caso: 2 hijos
             min_value = self.min(raiz.derecha)
             raiz.dato = min_value
             raiz.derecha = self.eliminar(min_value, raiz.derecha)
